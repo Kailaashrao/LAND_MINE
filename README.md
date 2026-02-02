@@ -48,4 +48,4 @@ Solar Recovery: 1 hour of sunlight = ~1,500 alert transmissions
 
 Cost Efficiency: Built for under ₹1,100 ($13 USD) per node.
 
-Developed by: [Your Team Name/Kailaashrao]
+Developed by: Kailaashrao
