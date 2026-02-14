@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alerts – Life Band Corporate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-slate-100 font-sans">
+
+  <div id="app-sidebar"></div>
+
+  <div class="main-content">
+    <div id="app-topbar"></div>
+
+    <main class="p-6 lg:p-8">
+
+      <!-- Stats row -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
+        <div class="metric-card red animate-fadeInUp" style="opacity:0;animation-delay:0.1s">
+          <div class="text-sm font-medium text-slate-500 mb-2">Active Alerts</div>
+          <div class="text-3xl font-bold text-red-600" id="activeCount">--</div>
+        </div>
+        <div class="metric-card amber animate-fadeInUp" style="opacity:0;animation-delay:0.2s">
+          <div class="text-sm font-medium text-slate-500 mb-2">Unresolved</div>
+          <div class="text-3xl font-bold text-amber-600" id="unresolvedCount">--</div>
+        </div>
+        <div class="metric-card green animate-fadeInUp" style="opacity:0;animation-delay:0.3s">
+          <div class="text-sm font-medium text-slate-500 mb-2">Resolved Today</div>
+          <div class="text-3xl font-bold text-emerald-600" id="resolvedCount">--</div>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="flex flex-wrap items-center gap-3 mb-6">
+        <button onclick="setFilter('all')" id="aAll" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-white transition">All Alerts</button>
+        <button onclick="setFilter('unresolved')" id="aUnresolved" class="px-4 py-2 rounded-xl text-xs font-semibold bg-white text-slate-600 border border-slate-200 transition">Unresolved</button>
+        <button onclick="setFilter('resolved')" id="aResolved" class="px-4 py-2 rounded-xl text-xs font-semibold bg-white text-slate-600 border border-slate-200 transition">Resolved</button>
+        <button onclick="setFilter('critical')" id="aCritical" class="px-4 py-2 rounded-xl text-xs font-semibold bg-white text-slate-600 border border-slate-200 transition">Critical Only</button>
+      </div>
+
+      <!-- Alert list -->
+      <div id="alertList" class="space-y-4"></div>
+
+      <!-- Empty state -->
+      <div id="emptyState" class="hidden text-center py-16">
+        <div class="w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center mx-auto mb-4">
+          <i data-lucide="check-circle-2" class="w-8 h-8 text-emerald-500"></i>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 mb-1">All clear!</h3>
+        <p class="text-slate-500 text-sm">No alerts matching this filter.</p>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/animations.js"></script>
+  <script>
+    if (!App.Auth.requireAuth('corporate')) throw 'redirect';
+    App.initDashboardShell('corporate-alerts.html', 'Alerts', 'Employee health alert management');
+
+    let alerts = JSON.parse(JSON.stringify(MockData.alerts)); // deep copy
+    let currentFilter = 'all';
+
+    function updateCounts() {
+      const active = alerts.filter(a => !a.resolved).length;
+      const resolved = alerts.filter(a => a.resolved).length;
+      document.getElementById('activeCount').textContent = alerts.length;
+      document.getElementById('unresolvedCount').textContent = active;
+      document.getElementById('resolvedCount').textContent = resolved;
+    }
+
+    function renderAlerts() {
+      let filtered = alerts;
+      if (currentFilter === 'unresolved') filtered = alerts.filter(a => !a.resolved);
+      else if (currentFilter === 'resolved') filtered = alerts.filter(a => a.resolved);
+      else if (currentFilter === 'critical') filtered = alerts.filter(a => a.type === 'critical');
+
+      document.getElementById('emptyState').classList.toggle('hidden', filtered.length > 0);
+
+      document.getElementById('alertList').innerHTML = filtered.map((a, i) => {
+        const isCritical = a.type === 'critical';
+        const borderColor = isCritical ? 'border-red-200' : 'border-amber-200';
+        const bgHover = isCritical ? 'hover:bg-red-50' : 'hover:bg-amber-50';
+        const iconBg = isCritical ? 'bg-red-100' : 'bg-amber-100';
+        const iconColor = isCritical ? 'text-red-600' : 'text-amber-600';
+
+        return `
+        <div class="bg-white rounded-xl border ${borderColor} p-5 ${bgHover} transition-all animate-fadeInUp ${a.resolved ? 'opacity-60' : ''}" style="opacity:0; animation-delay:${i * 0.06}s">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-lg ${iconBg} flex items-center justify-center flex-shrink-0 mt-0.5">
+              <i data-lucide="${isCritical ? 'alert-octagon' : 'alert-triangle'}" class="w-5 h-5 ${iconColor}"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-sm font-bold text-slate-900">${a.employee}</span>
+                <span class="badge ${a.type}">${a.type === 'critical' ? 'Critical' : 'Warning'}</span>
+                ${a.resolved ? '<span class="badge normal">Resolved</span>' : ''}
+              </div>
+              <p class="text-sm text-slate-600">${a.message}</p>
+              <div class="flex items-center gap-4 mt-2 text-xs text-slate-400">
+                <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> ${App.timeAgo(a.timestamp)}</span>
+                <span class="flex items-center gap-1"><i data-lucide="hash" class="w-3 h-3"></i> ${a.id}</span>
+              </div>
+            </div>
+            ${!a.resolved ? `
+              <button onclick="resolveAlert('${a.id}')" class="px-4 py-2 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition flex items-center gap-1.5 flex-shrink-0">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                Resolve
+              </button>
+            ` : ''}
+          </div>
+        </div>`;
+      }).join('');
+
+      requestAnimationFrame(() => lucide.createIcons());
+    }
+
+    function resolveAlert(id) {
+      const alert = alerts.find(a => a.id === id);
+      if (alert) {
+        alert.resolved = true;
+        updateCounts();
+        renderAlerts();
+        App.showToast(`Alert ${id} resolved`, 'success');
+      }
+    }
+
+    function setFilter(f) {
+      currentFilter = f;
+      ['aAll','aUnresolved','aResolved','aCritical'].forEach(id => {
+        const el = document.getElementById(id);
+        const match = id.replace('a','').toLowerCase() === f;
+        el.className = match
+          ? 'px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-white transition'
+          : 'px-4 py-2 rounded-xl text-xs font-semibold bg-white text-slate-600 border border-slate-200 transition';
+      });
+      renderAlerts();
+    }
+
+    updateCounts();
+    renderAlerts();
+  </script>
+</body>
+</html>

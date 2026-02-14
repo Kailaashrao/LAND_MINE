@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life Band – Real-Time Stress & Health Monitoring</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter','system-ui','sans-serif'] } } } }
+  </script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .choice-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .choice-card:hover { transform: translateY(-8px) scale(1.02); }
+    .grid-bg {
+      background-image: radial-gradient(circle at 1px 1px, rgba(148,163,184,0.12) 1px, transparent 0);
+      background-size: 40px 40px;
+    }
+    .glow-blue { box-shadow: 0 0 60px rgba(37,99,235,0.15), 0 0 120px rgba(37,99,235,0.05); }
+    .glow-violet { box-shadow: 0 0 60px rgba(124,58,237,0.15), 0 0 120px rgba(124,58,237,0.05); }
+    /* Splash logo animation */
+    @keyframes logo-breathe {
+      0%, 100% { transform: scale(1); filter: brightness(1); }
+      50% { transform: scale(1.08); filter: brightness(1.2); }
+    }
+    @keyframes logo-ring-pulse {
+      0% { transform: scale(0.85); opacity: 0.8; }
+      100% { transform: scale(1.8); opacity: 0; }
+    }
+    .splash-logo-img { animation: logo-breathe 1.2s ease-in-out infinite; }
+    .splash-ring-outer {
+      position: absolute; inset: -16px; border-radius: 50%;
+      border: 2px solid rgba(37,99,235,0.25);
+      animation: logo-ring-pulse 1.8s ease-out infinite;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 font-sans text-white overflow-x-hidden">
+
+  <!-- =========== SPLASH SCREEN =========== -->
+  <div id="splash" class="splash-screen" style="background: linear-gradient(135deg, #0a1628 0%, #122244 50%, #0a1628 100%);">
+    <div class="relative">
+      <div class="splash-ring-outer"></div>
+      <div class="w-28 h-28 rounded-full bg-white/5 backdrop-blur flex items-center justify-center border border-blue-500/20 shadow-lg shadow-blue-500/10">
+        <img src="assets/logo.png" alt="Life Band" class="w-20 h-20 object-contain splash-logo-img rounded-full">
+      </div>
+    </div>
+    <div class="mt-6 text-center">
+      <h1 class="text-3xl font-bold tracking-tight text-white">Life Band</h1>
+      <p class="text-blue-400/70 text-sm mt-2 font-medium tracking-wide">by Life Line Innovations</p>
+    </div>
+    <div class="mt-8 flex items-center gap-2">
+      <div class="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style="animation-delay:0s"></div>
+      <div class="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style="animation-delay:0.15s"></div>
+      <div class="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style="animation-delay:0.3s"></div>
+    </div>
+  </div>
+
+  <!-- =========== MAIN LANDING =========== -->
+  <div id="landing" class="min-h-screen grid-bg" style="opacity:0; transition: opacity 0.8s ease;">
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 z-30 border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-xl">
+      <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+        <a href="index.html" class="flex items-center gap-3 no-underline">
+          <img src="assets/logo.png" alt="Life Band" class="w-9 h-9 rounded-lg object-contain">
+          <span class="text-white font-bold text-lg tracking-tight">Life Band</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="about.html" class="text-slate-400 hover:text-white transition text-sm font-medium">About</a>
+          <a href="how-it-works.html" class="text-slate-400 hover:text-white transition text-sm font-medium">How It Works</a>
+          <a href="contact.html" class="text-slate-400 hover:text-white transition text-sm font-medium">Contact</a>
+        </div>
+        <button class="md:hidden p-2 rounded-lg hover:bg-white/10 transition" onclick="document.getElementById('mobileMenu').classList.toggle('hidden')">
+          <i data-lucide="menu" class="w-5 h-5 text-white"></i>
+        </button>
+      </div>
+      <div id="mobileMenu" class="hidden md:hidden border-t border-slate-800/50 bg-slate-950/95 backdrop-blur-xl px-6 py-4 space-y-3">
+        <a href="about.html" class="block text-slate-300 hover:text-white transition text-sm font-medium py-2">About</a>
+        <a href="how-it-works.html" class="block text-slate-300 hover:text-white transition text-sm font-medium py-2">How It Works</a>
+        <a href="contact.html" class="block text-slate-300 hover:text-white transition text-sm font-medium py-2">Contact</a>
+      </div>
+    </nav>
+
+    <div class="pt-28 sm:pt-32 lg:pt-36 pb-16 px-6 max-w-7xl mx-auto">
+      <!-- Headline -->
+      <h1 class="text-center text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight animate-fadeInUp">
+        <span class="text-white">Stress doesn't send</span><br>
+        <span class="bg-gradient-to-r from-blue-400 via-blue-500 to-violet-500 bg-clip-text text-transparent">warnings.</span>
+        <span class="text-white"> Life Band does.</span>
+      </h1>
+
+      <p class="text-center text-slate-400 text-lg max-w-2xl mx-auto mt-6 leading-relaxed animate-fadeInUp delay-200" style="opacity:0;">
+        Making stress visible before it becomes dangerous through real-time detection and automatic alert intervention.
+      </p>
+
+      <!-- Choice Cards -->
+      <div class="grid md:grid-cols-2 gap-8 mt-16 max-w-4xl mx-auto">
+
+        <!-- Individual Card -->
+        <a href="individual-login.html" class="choice-card block rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur p-8 no-underline group glow-blue animate-fadeInUp delay-300" style="opacity:0;">
+          <div class="w-14 h-14 rounded-xl bg-blue-500/10 flex items-center justify-center mb-5 group-hover:bg-blue-500/20 transition">
+            <i data-lucide="user" class="w-7 h-7 text-blue-400"></i>
+          </div>
+          <h2 class="text-xl font-bold text-white mb-2">Individual User</h2>
+          <p class="text-slate-400 text-sm leading-relaxed mb-6">Personal health monitoring dashboard. Track stress, blood pressure, heart rate and get AI-powered suggestions.</p>
+          <div class="flex items-center gap-2 text-blue-400 text-sm font-semibold group-hover:gap-3 transition-all">
+            <span>Access Dashboard</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </div>
+        </a>
+
+        <!-- Corporate Card -->
+        <a href="corporate-login.html" class="choice-card block rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur p-8 no-underline group glow-violet animate-fadeInUp delay-400" style="opacity:0;">
+          <div class="w-14 h-14 rounded-xl bg-violet-500/10 flex items-center justify-center mb-5 group-hover:bg-violet-500/20 transition">
+            <i data-lucide="building-2" class="w-7 h-7 text-violet-400"></i>
+          </div>
+          <h2 class="text-xl font-bold text-white mb-2">Corporate / HR</h2>
+          <p class="text-slate-400 text-sm leading-relaxed mb-6">Enterprise employee wellness platform. Monitor team health, manage alerts, and generate compliance reports.</p>
+          <div class="flex items-center gap-2 text-violet-400 text-sm font-semibold group-hover:gap-3 transition-all">
+            <span>Corporate Portal</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- Feature bullets -->
+      <div class="flex flex-wrap justify-center gap-x-10 gap-y-4 mt-16 animate-fadeIn delay-600" style="opacity:0;">
+        <div class="flex items-center gap-2 text-slate-500 text-sm">
+          <i data-lucide="shield-check" class="w-4 h-4 text-blue-500"></i>
+          <span>HIPAA Compliant</span>
+        </div>
+        <div class="flex items-center gap-2 text-slate-500 text-sm">
+          <i data-lucide="zap" class="w-4 h-4 text-blue-500"></i>
+          <span>Real-Time Detection</span>
+        </div>
+        <div class="flex items-center gap-2 text-slate-500 text-sm">
+          <i data-lucide="brain" class="w-4 h-4 text-blue-500"></i>
+          <span>AI-Powered Insights</span>
+        </div>
+        <div class="flex items-center gap-2 text-slate-500 text-sm">
+          <i data-lucide="lock" class="w-4 h-4 text-blue-500"></i>
+          <span>End-to-End Encrypted</span>
+        </div>
+      </div>
+
+    </div><!-- end content wrapper -->
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/50 mt-12">
+      <div class="max-w-7xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-slate-600 text-sm">&copy; 2026 Life Line Innovations. All rights reserved.</p>
+        <div class="flex items-center gap-6">
+          <a href="about.html" class="text-slate-600 hover:text-slate-400 text-sm transition">About</a>
+          <a href="how-it-works.html" class="text-slate-600 hover:text-slate-400 text-sm transition">How It Works</a>
+          <a href="contact.html" class="text-slate-600 hover:text-slate-400 text-sm transition">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="js/animations.js"></script>
+  <script>
+    // Splash → Landing transition
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      Animations.handleSplash('splash', 2200);
+      setTimeout(() => {
+        document.getElementById('landing').style.opacity = '1';
+      }, 2200);
+    });
+  </script>
+</body>
+</html>

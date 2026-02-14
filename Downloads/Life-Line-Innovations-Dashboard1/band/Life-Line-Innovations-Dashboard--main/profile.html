@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile – Life Band</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-slate-100 font-sans">
+
+  <div id="app-sidebar"></div>
+
+  <div class="main-content">
+    <div id="app-topbar"></div>
+
+    <main class="p-6 lg:p-8 max-w-4xl">
+
+      <!-- Profile Header -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 mb-6 animate-fadeInUp">
+        <div class="flex flex-wrap items-center gap-5">
+          <div id="profileAvatar" class="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">AM</div>
+          <div class="flex-1">
+            <h2 id="profileName" class="text-xl font-bold text-slate-900">Alex Morgan</h2>
+            <p id="profileEmail" class="text-sm text-slate-500 mt-0.5">user@lifeband.com</p>
+            <div class="flex items-center gap-3 mt-2">
+              <span class="badge info">Individual Plan</span>
+              <span class="text-xs text-slate-400">Member since Jan 2026</span>
+            </div>
+          </div>
+          <button onclick="toggleEdit()" id="editBtn" class="btn-secondary text-sm">
+            <i data-lucide="pencil" class="w-4 h-4"></i>
+            Edit Profile
+          </button>
+        </div>
+      </div>
+
+      <!-- Personal Info -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 mb-6 animate-fadeInUp delay-100" style="opacity:0">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center">
+            <i data-lucide="user" class="w-5 h-5 text-blue-600"></i>
+          </div>
+          <h3 class="text-base font-bold text-slate-900">Personal Information</h3>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label class="form-label">Full Name</label>
+            <input type="text" id="pName" class="form-input" disabled>
+          </div>
+          <div>
+            <label class="form-label">Date of Birth</label>
+            <input type="text" id="pDOB" class="form-input" disabled>
+          </div>
+          <div>
+            <label class="form-label">Gender</label>
+            <input type="text" id="pGender" class="form-input" disabled>
+          </div>
+          <div>
+            <label class="form-label">Phone</label>
+            <input type="text" id="pPhone" class="form-input" disabled>
+          </div>
+        </div>
+      </div>
+
+      <!-- Medical Info -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 mb-6 animate-fadeInUp delay-200" style="opacity:0">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center">
+            <i data-lucide="heart-pulse" class="w-5 h-5 text-emerald-600"></i>
+          </div>
+          <h3 class="text-base font-bold text-slate-900">Medical Information</h3>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label class="form-label">Height</label>
+            <input type="text" id="pHeight" class="form-input" disabled>
+          </div>
+          <div>
+            <label class="form-label">Weight</label>
+            <input type="text" id="pWeight" class="form-input" disabled>
+          </div>
+          <div>
+            <label class="form-label">Blood Type</label>
+            <input type="text" id="pBlood" class="form-input" disabled>
+          </div>
+          <div>
+            <label class="form-label">Allergies</label>
+            <input type="text" id="pAllergies" class="form-input" disabled>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="form-label">Existing Conditions</label>
+            <input type="text" id="pConditions" class="form-input" disabled>
+          </div>
+        </div>
+      </div>
+
+      <!-- Emergency Contact -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 mb-6 animate-fadeInUp delay-300" style="opacity:0">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-9 h-9 rounded-lg bg-red-50 flex items-center justify-center">
+            <i data-lucide="phone-call" class="w-5 h-5 text-red-600"></i>
+          </div>
+          <h3 class="text-base font-bold text-slate-900">Emergency Contact</h3>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label class="form-label">Contact Name</label>
+            <input type="text" id="pEmName" class="form-input" disabled>
+          </div>
+          <div>
+            <label class="form-label">Relationship</label>
+            <input type="text" id="pEmRelation" class="form-input" disabled>
+          </div>
+          <div>
+            <label class="form-label">Phone</label>
+            <input type="text" id="pEmPhone" class="form-input" disabled>
+          </div>
+          <div>
+            <label class="form-label">Email</label>
+            <input type="text" id="pEmEmail" class="form-input" disabled>
+          </div>
+        </div>
+      </div>
+
+      <!-- Save button (hidden by default) -->
+      <div id="saveRow" class="hidden flex items-center justify-end gap-3 mb-6">
+        <button onclick="toggleEdit()" class="btn-secondary">Cancel</button>
+        <button onclick="saveProfile()" class="btn-primary">
+          <i data-lucide="check" class="w-4 h-4"></i>
+          Save Changes
+        </button>
+      </div>
+
+      <!-- Account Actions -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 animate-fadeInUp delay-400" style="opacity:0">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
+            <i data-lucide="settings" class="w-5 h-5 text-slate-600"></i>
+          </div>
+          <h3 class="text-base font-bold text-slate-900">Account Settings</h3>
+        </div>
+        <div class="space-y-3">
+          <div class="flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:bg-slate-50 transition">
+            <div class="flex items-center gap-3">
+              <i data-lucide="bell" class="w-5 h-5 text-slate-500"></i>
+              <div>
+                <div class="text-sm font-semibold text-slate-900">Notifications</div>
+                <div class="text-xs text-slate-500">Health alerts, suggestions, reports</div>
+              </div>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" class="sr-only peer" checked>
+              <div class="w-11 h-6 bg-slate-200 peer-checked:bg-blue-600 rounded-full peer-focus:ring-2 peer-focus:ring-blue-300 after:content-[''] after:absolute after:top-0.5 after:left-[2px] peer-checked:after:translate-x-full after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+            </label>
+          </div>
+          <div class="flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:bg-slate-50 transition">
+            <div class="flex items-center gap-3">
+              <i data-lucide="shield" class="w-5 h-5 text-slate-500"></i>
+              <div>
+                <div class="text-sm font-semibold text-slate-900">Two-Factor Authentication</div>
+                <div class="text-xs text-slate-500">Secure your account</div>
+              </div>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" class="sr-only peer">
+              <div class="w-11 h-6 bg-slate-200 peer-checked:bg-blue-600 rounded-full peer-focus:ring-2 peer-focus:ring-blue-300 after:content-[''] after:absolute after:top-0.5 after:left-[2px] peer-checked:after:translate-x-full after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+            </label>
+          </div>
+          <button onclick="App.Auth.logout()" class="w-full flex items-center gap-3 p-4 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 transition">
+            <i data-lucide="log-out" class="w-5 h-5"></i>
+            <span class="text-sm font-semibold">Sign Out</span>
+          </button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/animations.js"></script>
+  <script>
+    if (!App.Auth.requireAuth('individual')) throw 'redirect';
+    App.initDashboardShell('profile.html', 'My Profile', 'Manage your personal & medical info');
+
+    const user = App.Auth.getUser();
+    const profile = App.Auth.getProfile() || {};
+    let editing = false;
+
+    function populateProfile() {
+      document.getElementById('profileName').textContent = user.name;
+      document.getElementById('profileEmail').textContent = user.email;
+      document.getElementById('profileAvatar').textContent = user.avatar || 'AM';
+
+      document.getElementById('pName').value = profile.fullName || user.name || 'Alex Morgan';
+      document.getElementById('pDOB').value = profile.dob || '1990-05-15';
+      document.getElementById('pGender').value = profile.gender || 'Male';
+      document.getElementById('pPhone').value = profile.phone || '+1 (555) 123-4567';
+      document.getElementById('pHeight').value = profile.height ? profile.height + ' cm' : '175 cm';
+      document.getElementById('pWeight').value = profile.weight ? profile.weight + ' kg' : '72 kg';
+      document.getElementById('pBlood').value = profile.bloodType || 'O+';
+      document.getElementById('pAllergies').value = profile.allergies || 'None';
+      document.getElementById('pConditions').value = profile.conditions || 'None';
+
+      const em = profile.emergency || {};
+      document.getElementById('pEmName').value = em.name || 'Jane Morgan';
+      document.getElementById('pEmRelation').value = em.relation || 'Spouse';
+      document.getElementById('pEmPhone').value = em.phone || '+1 (555) 987-6543';
+      document.getElementById('pEmEmail').value = em.email || 'jane@example.com';
+    }
+
+    function toggleEdit() {
+      editing = !editing;
+      const inputs = document.querySelectorAll('main input[type="text"], main input[type="email"], main input[type="tel"]');
+      inputs.forEach(input => input.disabled = !editing);
+      document.getElementById('saveRow').classList.toggle('hidden', !editing);
+      document.getElementById('editBtn').innerHTML = editing
+        ? '<i data-lucide="x" class="w-4 h-4"></i> Cancel'
+        : '<i data-lucide="pencil" class="w-4 h-4"></i> Edit Profile';
+      lucide.createIcons();
+    }
+
+    function saveProfile() {
+      const updated = {
+        fullName: document.getElementById('pName').value,
+        dob: document.getElementById('pDOB').value,
+        gender: document.getElementById('pGender').value,
+        phone: document.getElementById('pPhone').value,
+        height: parseInt(document.getElementById('pHeight').value),
+        weight: parseInt(document.getElementById('pWeight').value),
+        bloodType: document.getElementById('pBlood').value,
+        allergies: document.getElementById('pAllergies').value,
+        conditions: document.getElementById('pConditions').value,
+        emergency: {
+          name: document.getElementById('pEmName').value,
+          relation: document.getElementById('pEmRelation').value,
+          phone: document.getElementById('pEmPhone').value,
+          email: document.getElementById('pEmEmail').value
+        }
+      };
+      localStorage.setItem('lifeBand_profile', JSON.stringify(updated));
+      toggleEdit();
+      App.showToast('Profile updated successfully', 'success');
+    }
+
+    populateProfile();
+  </script>
+</body>
+</html>

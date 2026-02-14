@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Setup Your Profile – Life Band</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-slate-50 font-sans min-h-screen">
+
+  <div class="min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200 px-6 py-4">
+      <div class="max-w-3xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img src="assets/logo.png" alt="Life Band" class="w-9 h-9 rounded-lg object-contain">
+          <span class="text-slate-900 font-bold text-lg">Life Band</span>
+        </div>
+        <div class="text-sm text-slate-500">Step <span id="stepNum">1</span> of 4</div>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="flex-1 flex items-start justify-center py-10 px-6">
+      <div class="w-full max-w-2xl">
+
+        <!-- Progress Bar -->
+        <div class="mb-10">
+          <div class="flex items-center justify-between mb-3 flex-wrap gap-y-2">
+            <div id="stepLabel1" class="flex items-center gap-2">
+              <div class="step-circle w-8 h-8 rounded-full bg-blue-600 text-white text-sm font-bold flex items-center justify-center">1</div>
+              <span class="text-sm font-semibold text-blue-700 hidden sm:inline">Preferences</span>
+            </div>
+            <div class="flex-1 mx-2 sm:mx-4 h-0.5 bg-slate-200 rounded overflow-hidden">
+              <div id="prog1" class="h-full bg-blue-600 rounded transition-all duration-500" style="width:0%"></div>
+            </div>
+            <div id="stepLabel2" class="flex items-center gap-2">
+              <div class="step-circle w-8 h-8 rounded-full bg-slate-200 text-slate-500 text-sm font-bold flex items-center justify-center">2</div>
+              <span class="text-sm font-medium text-slate-400 hidden sm:inline">Personal Info</span>
+            </div>
+            <div class="flex-1 mx-2 sm:mx-4 h-0.5 bg-slate-200 rounded overflow-hidden">
+              <div id="prog2" class="h-full bg-blue-600 rounded transition-all duration-500" style="width:0%"></div>
+            </div>
+            <div id="stepLabel3" class="flex items-center gap-2">
+              <div class="step-circle w-8 h-8 rounded-full bg-slate-200 text-slate-500 text-sm font-bold flex items-center justify-center">3</div>
+              <span class="text-sm font-medium text-slate-400 hidden sm:inline">Medical</span>
+            </div>
+            <div class="flex-1 mx-2 sm:mx-4 h-0.5 bg-slate-200 rounded overflow-hidden">
+              <div id="prog3" class="h-full bg-blue-600 rounded transition-all duration-500" style="width:0%"></div>
+            </div>
+            <div id="stepLabel4" class="flex items-center gap-2">
+              <div class="step-circle w-8 h-8 rounded-full bg-slate-200 text-slate-500 text-sm font-bold flex items-center justify-center">4</div>
+              <span class="text-sm font-medium text-slate-400 hidden sm:inline">Emergency</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 1: Language & Location -->
+        <div id="step1" class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 animate-fadeInUp">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center">
+              <i data-lucide="globe" class="w-5 h-5 text-indigo-600"></i>
+            </div>
+            <div>
+              <h2 class="text-xl font-bold text-slate-900">Preferences</h2>
+              <p class="text-slate-500 text-sm">Choose your language and share your location</p>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <!-- Language Selection -->
+            <div>
+              <label class="form-label">Preferred Language</label>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-2" id="langPicker">
+                <button type="button" onclick="selectLang('en')" class="lang-btn active flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-blue-500 bg-blue-50 transition hover:shadow" data-lang="en">
+                  <span class="text-2xl">🇬🇧</span>
+                  <span class="text-sm font-semibold text-slate-800">English</span>
+                </button>
+                <button type="button" onclick="selectLang('hi')" class="lang-btn flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-slate-200 bg-white transition hover:shadow hover:border-blue-300" data-lang="hi">
+                  <span class="text-2xl">🇮🇳</span>
+                  <span class="text-sm font-semibold text-slate-800">हिन्दी</span>
+                </button>
+                <button type="button" onclick="selectLang('ta')" class="lang-btn flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-slate-200 bg-white transition hover:shadow hover:border-blue-300" data-lang="ta">
+                  <span class="text-2xl">🇮🇳</span>
+                  <span class="text-sm font-semibold text-slate-800">தமிழ்</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Location -->
+            <div>
+              <label class="form-label">Your Location</label>
+              <div class="flex gap-3">
+                <input type="text" id="userLocation" class="form-input flex-1" placeholder="City, State or tap detect" readonly>
+                <button type="button" onclick="detectLocation()" id="detectBtn" class="btn-secondary px-4 flex items-center gap-2 text-sm">
+                  <i data-lucide="map-pin" class="w-4 h-4"></i>
+                  <span class="hidden sm:inline">Detect</span>
+                </button>
+              </div>
+              <p id="locStatus" class="text-xs text-slate-400 mt-1.5"></p>
+            </div>
+          </div>
+
+          <div class="flex justify-end mt-8">
+            <button onclick="nextStep(2)" class="btn-primary px-8">
+              Continue
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Personal Info -->
+        <div id="step2" class="hidden bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
+              <i data-lucide="user" class="w-5 h-5 text-blue-600"></i>
+            </div>
+            <div>
+              <h2 class="text-xl font-bold text-slate-900">Personal Information</h2>
+              <p class="text-slate-500 text-sm">Tell us about yourself so we can personalize your experience</p>
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label class="form-label">Full Name</label>
+              <input type="text" id="fullName" class="form-input" placeholder="Alex Morgan" required>
+            </div>
+            <div>
+              <label class="form-label">Date of Birth</label>
+              <input type="date" id="dob" class="form-input" required>
+            </div>
+            <div>
+              <label class="form-label">Gender</label>
+              <select id="gender" class="form-input">
+                <option value="">Select...</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+                <option value="prefer-not">Prefer not to say</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label">Phone Number</label>
+              <input type="tel" id="phone" class="form-input" placeholder="+91 98765 43210">
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between mt-8">
+            <button onclick="prevStep(1)" class="btn-secondary">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back
+            </button>
+            <button onclick="nextStep(3)" class="btn-primary px-8">
+              Continue
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Medical Baseline -->
+        <div id="step3" class="hidden bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center">
+              <i data-lucide="heart-pulse" class="w-5 h-5 text-green-600"></i>
+            </div>
+            <div>
+              <h2 class="text-xl font-bold text-slate-900">Medical Baseline</h2>
+              <p class="text-slate-500 text-sm">This helps us calibrate your health monitoring accurately</p>
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label class="form-label">Height (cm)</label>
+              <input type="number" id="height" class="form-input" placeholder="175">
+            </div>
+            <div>
+              <label class="form-label">Weight (kg)</label>
+              <input type="number" id="weight" class="form-input" placeholder="70">
+            </div>
+            <div>
+              <label class="form-label">Blood Type</label>
+              <select id="bloodType" class="form-input">
+                <option value="">Select...</option>
+                <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+                <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label">Known Allergies</label>
+              <input type="text" id="allergies" class="form-input" placeholder="None, or list...">
+            </div>
+            <div class="sm:col-span-2">
+              <label class="form-label">Existing Conditions</label>
+              <textarea id="conditions" class="form-input" rows="3" placeholder="Hypertension, Diabetes, etc. (leave empty if none)"></textarea>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between mt-8">
+            <button onclick="prevStep(2)" class="btn-secondary">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back
+            </button>
+            <button onclick="nextStep(4)" class="btn-primary px-8">
+              Continue
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 4: Emergency Contact -->
+        <div id="step4" class="hidden bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center">
+              <i data-lucide="phone-call" class="w-5 h-5 text-red-600"></i>
+            </div>
+            <div>
+              <h2 class="text-xl font-bold text-slate-900">Emergency Contact</h2>
+              <p class="text-slate-500 text-sm">Who should we notify in case of a health emergency?</p>
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label class="form-label">Contact Name</label>
+              <input type="text" id="emergencyName" class="form-input" placeholder="Jane Morgan">
+            </div>
+            <div>
+              <label class="form-label">Relationship</label>
+              <select id="emergencyRelation" class="form-input">
+                <option value="">Select...</option>
+                <option>Spouse</option><option>Parent</option><option>Sibling</option><option>Friend</option><option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label">Phone Number</label>
+              <input type="tel" id="emergencyPhone" class="form-input" placeholder="+1 (555) 000-0000">
+            </div>
+            <div>
+              <label class="form-label">Email (optional)</label>
+              <input type="email" id="emergencyEmail" class="form-input" placeholder="jane@example.com">
+            </div>
+          </div>
+
+          <div class="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-xl flex items-start gap-3">
+            <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5"></i>
+            <div class="text-sm text-amber-800">
+              <strong>Important:</strong> In critical stress or BP events, Life Band may automatically alert your emergency contact and recommend nearby medical services.
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between mt-8">
+            <button onclick="prevStep(3)" class="btn-secondary">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back
+            </button>
+            <button onclick="completeOnboarding()" class="btn-primary px-8 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700">
+              <i data-lucide="check-circle" class="w-4 h-4"></i>
+              Complete Setup
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/animations.js"></script>
+  <script>
+    lucide.createIcons();
+    let currentStep = 1;
+    let selectedLang = 'en';
+
+    function selectLang(lang) {
+      selectedLang = lang;
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        if (btn.dataset.lang === lang) {
+          btn.classList.add('active');
+          btn.className = btn.className.replace('border-slate-200 bg-white', 'border-blue-500 bg-blue-50');
+        } else {
+          btn.classList.remove('active');
+          btn.className = btn.className.replace('border-blue-500 bg-blue-50', 'border-slate-200 bg-white');
+        }
+      });
+    }
+
+    function detectLocation() {
+      const btn = document.getElementById('detectBtn');
+      const status = document.getElementById('locStatus');
+      const input = document.getElementById('userLocation');
+      btn.disabled = true;
+      status.textContent = 'Detecting your location...';
+      status.className = 'text-xs text-blue-500 mt-1.5';
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          async (pos) => {
+            try {
+              const resp = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&format=json`);
+              const data = await resp.json();
+              const city = data.address.city || data.address.town || data.address.village || '';
+              const state = data.address.state || '';
+              input.value = city && state ? `${city}, ${state}` : data.display_name.split(',').slice(0,2).join(',');
+              status.textContent = 'Location detected!';
+              status.className = 'text-xs text-green-600 mt-1.5';
+            } catch(e) {
+              input.value = `${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`;
+              status.textContent = 'Coordinates captured (reverse lookup unavailable)';
+              status.className = 'text-xs text-amber-600 mt-1.5';
+            }
+            btn.disabled = false;
+          },
+          (err) => {
+            status.textContent = 'Location access denied. You can type your city manually.';
+            status.className = 'text-xs text-red-500 mt-1.5';
+            input.readOnly = false;
+            input.placeholder = 'Type your city, state...';
+            btn.disabled = false;
+          },
+          { enableHighAccuracy: true, timeout: 10000 }
+        );
+      } else {
+        status.textContent = 'Geolocation not supported. Type your location manually.';
+        status.className = 'text-xs text-red-500 mt-1.5';
+        input.readOnly = false;
+        btn.disabled = false;
+      }
+    }
+
+    function nextStep(step) {
+      document.getElementById(`step${currentStep}`).classList.add('hidden');
+      document.getElementById(`step${step}`).classList.remove('hidden');
+      document.getElementById(`step${step}`).classList.add('animate-fadeInUp');
+      currentStep = step;
+      updateProgress();
+    }
+
+    function prevStep(step) {
+      document.getElementById(`step${currentStep}`).classList.add('hidden');
+      document.getElementById(`step${step}`).classList.remove('hidden');
+      currentStep = step;
+      updateProgress();
+    }
+
+    function updateProgress() {
+      document.getElementById('stepNum').textContent = currentStep;
+      document.getElementById('prog1').style.width = currentStep >= 2 ? '100%' : '0%';
+      document.getElementById('prog2').style.width = currentStep >= 3 ? '100%' : '0%';
+      document.getElementById('prog3').style.width = currentStep >= 4 ? '100%' : '0%';
+      for (let i = 1; i <= 4; i++) {
+        const label = document.getElementById(`stepLabel${i}`);
+        const circle = label.querySelector('.step-circle');
+        const text = label.querySelector('span');
+        if (i < currentStep) {
+          circle.className = 'step-circle w-8 h-8 rounded-full bg-green-600 text-white text-sm font-bold flex items-center justify-center';
+          circle.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
+          if(text) text.className = 'text-sm font-semibold text-green-700 hidden sm:inline';
+        } else if (i === currentStep) {
+          circle.className = 'step-circle w-8 h-8 rounded-full bg-blue-600 text-white text-sm font-bold flex items-center justify-center';
+          circle.textContent = i;
+          if(text) text.className = 'text-sm font-semibold text-blue-700 hidden sm:inline';
+        } else {
+          circle.className = 'step-circle w-8 h-8 rounded-full bg-slate-200 text-slate-500 text-sm font-bold flex items-center justify-center';
+          circle.textContent = i;
+          if(text) text.className = 'text-sm font-medium text-slate-400 hidden sm:inline';
+        }
+      }
+    }
+
+    function completeOnboarding() {
+      const profile = {
+        language: selectedLang,
+        location: document.getElementById('userLocation').value,
+        fullName: document.getElementById('fullName').value || 'Alex Morgan',
+        dob: document.getElementById('dob').value,
+        gender: document.getElementById('gender').value,
+        phone: document.getElementById('phone').value,
+        height: document.getElementById('height').value,
+        weight: document.getElementById('weight').value,
+        bloodType: document.getElementById('bloodType').value,
+        allergies: document.getElementById('allergies').value,
+        conditions: document.getElementById('conditions').value,
+        emergency: {
+          name: document.getElementById('emergencyName').value,
+          relation: document.getElementById('emergencyRelation').value,
+          phone: document.getElementById('emergencyPhone').value,
+          email: document.getElementById('emergencyEmail').value
+        }
+      };
+      localStorage.setItem('lifeBand_language', selectedLang);
+      App.Auth.completeOnboarding(profile);
+      window.location.href = 'dashboard.html';
+    }
+  </script>
+</body>
+</html>

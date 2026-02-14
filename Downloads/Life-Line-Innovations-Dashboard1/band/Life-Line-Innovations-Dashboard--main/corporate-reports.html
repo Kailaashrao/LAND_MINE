@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports – Life Band Corporate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-slate-100 font-sans">
+
+  <div id="app-sidebar"></div>
+
+  <div class="main-content">
+    <div id="app-topbar"></div>
+
+    <main class="p-6 lg:p-8">
+
+      <!-- Header -->
+      <div class="bg-gradient-to-r from-violet-600 to-purple-800 rounded-2xl p-6 mb-8 text-white animate-fadeInUp">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="file-bar-chart" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold">Corporate Wellness Reports</h2>
+            <p class="text-violet-100 text-sm mt-1">Generate compliance-ready health and wellness reports for your organization. All reports follow HIPAA guidelines with anonymized data options.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Report Types -->
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+
+        <!-- Wellness Summary -->
+        <div class="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition-all animate-fadeInUp delay-100" style="opacity:0">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="heart-pulse" class="w-6 h-6 text-emerald-600"></i>
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-slate-900">Wellness Summary Report</h3>
+              <p class="text-sm text-slate-500 mt-1">Overall employee health status, stress averages, and BP trends for the selected period.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 mb-4">
+            <select class="form-input py-2 text-sm w-auto" id="wellnessPeriod">
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+              <option value="quarter">This Quarter</option>
+            </select>
+          </div>
+          <button onclick="genWellnessReport()" class="btn-primary w-full">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            Generate Report
+          </button>
+        </div>
+
+        <!-- Stress Analytics -->
+        <div class="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition-all animate-fadeInUp delay-200" style="opacity:0">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="brain" class="w-6 h-6 text-blue-600"></i>
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-slate-900">Stress Analytics Report</h3>
+              <p class="text-sm text-slate-500 mt-1">Detailed stress analysis by department, risk distribution, and trend comparisons.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 mb-4">
+            <select class="form-input py-2 text-sm w-auto" id="stressDept">
+              <option value="all">All Departments</option>
+              <option value="Engineering">Engineering</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Sales">Sales</option>
+              <option value="HR">HR</option>
+              <option value="Finance">Finance</option>
+            </select>
+          </div>
+          <button onclick="genStressReport()" class="btn-primary w-full bg-gradient-to-r from-blue-600 to-blue-700">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            Generate Report
+          </button>
+        </div>
+
+        <!-- Incident Log -->
+        <div class="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition-all animate-fadeInUp delay-300" style="opacity:0">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="shield-alert" class="w-6 h-6 text-red-600"></i>
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-slate-900">Incident Report</h3>
+              <p class="text-sm text-slate-500 mt-1">Complete log of health alerts, interventions, and resolution status for compliance.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
+            <i data-lucide="info" class="w-3.5 h-3.5"></i>
+            <span>Includes all alerts within selected timeframe</span>
+          </div>
+          <button onclick="genIncidentReport()" class="btn-primary w-full bg-gradient-to-r from-red-600 to-red-700">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            Generate Report
+          </button>
+        </div>
+
+        <!-- Custom Report -->
+        <div class="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-lg transition-all animate-fadeInUp delay-400" style="opacity:0">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-violet-50 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="sliders-horizontal" class="w-6 h-6 text-violet-600"></i>
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-slate-900">Custom Report Builder</h3>
+              <p class="text-sm text-slate-500 mt-1">Select specific metrics, date ranges, and departments for a tailored report.</p>
+            </div>
+          </div>
+          <div class="p-4 bg-violet-50 rounded-xl text-center">
+            <p class="text-sm text-violet-700 font-medium">Coming Soon</p>
+            <p class="text-xs text-violet-500 mt-1">Custom report builder launching Q2 2026</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Recent Downloads -->
+      <div class="chart-card">
+        <h3 class="text-base font-bold text-slate-900 mb-4">Recent Downloads</h3>
+        <div id="recentDownloads" class="space-y-3">
+          <div class="text-center py-8 text-slate-400 text-sm">No reports downloaded yet this session.</div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/animations.js"></script>
+  <script>
+    if (!App.Auth.requireAuth('corporate')) throw 'redirect';
+    App.initDashboardShell('corporate-reports.html', 'Reports', 'Generate & download compliance reports');
+
+    const downloadHistory = [];
+
+    function addDownloadEntry(name) {
+      downloadHistory.unshift({ name, time: new Date().toLocaleTimeString() });
+      const container = document.getElementById('recentDownloads');
+      container.innerHTML = downloadHistory.map(d => `
+        <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50">
+          <div class="w-9 h-9 rounded-lg bg-violet-50 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="file-text" class="w-4 h-4 text-violet-600"></i>
+          </div>
+          <div class="flex-1">
+            <div class="text-sm font-medium text-slate-900">${d.name}</div>
+            <div class="text-xs text-slate-500">Downloaded at ${d.time}</div>
+          </div>
+          <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500"></i>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function genWellnessReport() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      const period = document.getElementById('wellnessPeriod').value;
+
+      doc.setFontSize(18); doc.setTextColor(124,58,237);
+      doc.text('Wellness Summary Report', 20, 25);
+      doc.setFontSize(10); doc.setTextColor(100);
+      doc.text(`TechCorp Inc. · Period: ${period} · Generated: ${new Date().toLocaleDateString()}`, 20, 33);
+      doc.line(20, 37, 190, 37);
+
+      const emps = MockData.employees;
+      doc.autoTable({
+        startY: 45,
+        head: [['Metric', 'Value']],
+        body: [
+          ['Total Employees', emps.length],
+          ['Average Stress Level', (emps.reduce((a,e) => a + e.stress, 0) / emps.length).toFixed(1) + '%'],
+          ['Employees in Normal Range', emps.filter(e => e.status === 'normal').length],
+          ['Employees at Warning Level', emps.filter(e => e.status === 'warning').length],
+          ['Employees at Critical Level', emps.filter(e => e.status === 'critical').length],
+          ['Active Alerts', MockData.alerts.filter(a => !a.resolved).length]
+        ],
+        theme: 'grid',
+        headStyles: { fillColor: [124, 58, 237] }
+      });
+
+      doc.autoTable({
+        startY: doc.lastAutoTable.finalY + 12,
+        head: [['Name', 'Dept', 'Stress %', 'BP', 'Status']],
+        body: emps.map(e => [e.name, e.department, e.stress + '%', e.bp, e.status]),
+        theme: 'grid',
+        headStyles: { fillColor: [124, 58, 237] },
+        styles: { fontSize: 9 }
+      });
+
+      doc.save('Wellness-Summary-Report.pdf');
+      addDownloadEntry('Wellness Summary Report');
+      App.showToast('Wellness report generated', 'success');
+    }
+
+    function genStressReport() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      const dept = document.getElementById('stressDept').value;
+
+      doc.setFontSize(18); doc.setTextColor(37, 99, 235);
+      doc.text('Stress Analytics Report', 20, 25);
+      doc.setFontSize(10); doc.setTextColor(100);
+      doc.text(`Department: ${dept === 'all' ? 'All' : dept} · Generated: ${new Date().toLocaleDateString()}`, 20, 33);
+      doc.line(20, 37, 190, 37);
+
+      let emps = MockData.employees;
+      if (dept !== 'all') emps = emps.filter(e => e.department === dept);
+
+      doc.autoTable({
+        startY: 45,
+        head: [['Name', 'Dept', 'Stress %', 'Risk Level']],
+        body: emps.map(e => [e.name, e.department, e.stress + '%', e.status.toUpperCase()]),
+        theme: 'grid',
+        headStyles: { fillColor: [37, 99, 235] },
+        styles: { fontSize: 9 }
+      });
+
+      doc.save('Stress-Analytics-Report.pdf');
+      addDownloadEntry('Stress Analytics Report');
+      App.showToast('Stress report generated', 'success');
+    }
+
+    function genIncidentReport() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      doc.setFontSize(18); doc.setTextColor(220, 38, 38);
+      doc.text('Incident Report', 20, 25);
+      doc.setFontSize(10); doc.setTextColor(100);
+      doc.text(`Generated: ${new Date().toLocaleDateString()} · Classification: Confidential`, 20, 33);
+      doc.line(20, 37, 190, 37);
+
+      doc.autoTable({
+        startY: 45,
+        head: [['Alert ID', 'Employee', 'Type', 'Message', 'Resolved']],
+        body: MockData.alerts.map(a => [a.id, a.employee, a.type, a.message, a.resolved ? 'Yes' : 'No']),
+        theme: 'grid',
+        headStyles: { fillColor: [220, 38, 38] },
+        styles: { fontSize: 8 },
+        columnStyles: { 3: { cellWidth: 70 } }
+      });
+
+      doc.save('Incident-Report.pdf');
+      addDownloadEntry('Incident Report');
+      App.showToast('Incident report generated', 'success');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About – Life Band</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-slate-950 font-sans text-white">
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 right-0 z-30 border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-xl">
+    <div class="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
+      <a href="index.html" class="flex items-center gap-3 no-underline">
+        <img src="assets/logo.png" alt="Life Band" class="w-9 h-9 rounded-lg object-contain">
+        <span class="text-white font-bold text-lg tracking-tight">Life Band</span>
+      </a>
+      <div class="hidden md:flex items-center gap-6">
+        <a href="about.html" class="text-white text-sm font-semibold">About</a>
+        <a href="how-it-works.html" class="text-slate-400 hover:text-white transition text-sm font-medium">How It Works</a>
+        <a href="contact.html" class="text-slate-400 hover:text-white transition text-sm font-medium">Contact</a>
+        <a href="index.html" class="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition no-underline">Get Started</a>
+      </div>
+      <button class="md:hidden p-2 rounded-lg hover:bg-white/10 transition" onclick="document.getElementById('mobileMenu').classList.toggle('hidden')">
+        <i data-lucide="menu" class="w-5 h-5 text-white"></i>
+      </button>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-800/50 bg-slate-950/95 backdrop-blur-xl px-6 py-4 space-y-3">
+      <a href="about.html" class="block text-white font-semibold text-sm py-2">About</a>
+      <a href="how-it-works.html" class="block text-slate-300 hover:text-white transition text-sm font-medium py-2">How It Works</a>
+      <a href="contact.html" class="block text-slate-300 hover:text-white transition text-sm font-medium py-2">Contact</a>
+      <a href="index.html" class="block w-full text-center px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition no-underline mt-2">Get Started</a>
+    </div>
+  </nav>
+
+  <main class="pt-28 sm:pt-32">
+    <!-- Hero -->
+    <section class="max-w-6xl mx-auto px-6 text-center mb-20 animate-fadeInUp">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6">
+        <i data-lucide="info" class="w-3.5 h-3.5 text-blue-400"></i>
+        <span class="text-blue-300 text-xs font-semibold">ABOUT LIFE LINE INNOVATIONS</span>
+      </div>
+      <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight mb-6">
+        Making stress <span class="bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent">visible</span> before<br>it becomes dangerous.
+      </h1>
+      <p class="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
+        Life Line Innovations is building the future of preventive healthcare. Our flagship product, Life Band, is a wearable health monitoring platform that detects stress and cardiovascular risks in real time.
+      </p>
+    </section>
+
+    <!-- Mission -->
+    <section class="max-w-6xl mx-auto px-6 mb-20">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="animate-fadeInLeft">
+          <h2 class="text-2xl font-bold mb-4">Our Mission</h2>
+          <p class="text-slate-400 leading-relaxed mb-4">We believe that stress-related health crises are preventable. Every year, millions suffer from heart attacks, strokes, and anxiety disorders that could have been detected early.</p>
+          <p class="text-slate-400 leading-relaxed">Life Band bridges the gap between wearable technology and clinical-grade health monitoring, bringing hospital-level stress and vital sign detection to everyday life.</p>
+        </div>
+        <div class="grid grid-cols-2 gap-4 animate-fadeInRight">
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-5">
+            <div class="text-3xl font-bold text-blue-400 mb-1">98%</div>
+            <div class="text-slate-500 text-sm">Detection Accuracy</div>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-5">
+            <div class="text-3xl font-bold text-blue-400 mb-1">&lt;3s</div>
+            <div class="text-slate-500 text-sm">Alert Latency</div>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-5">
+            <div class="text-3xl font-bold text-blue-400 mb-1">24/7</div>
+            <div class="text-slate-500 text-sm">Continuous Monitoring</div>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-5">
+            <div class="text-3xl font-bold text-blue-400 mb-1">HIPAA</div>
+            <div class="text-slate-500 text-sm">Fully Compliant</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The Problem -->
+    <section class="max-w-6xl mx-auto px-6 mb-20">
+      <div class="bg-gradient-to-br from-red-950/50 to-slate-900/50 border border-red-900/30 rounded-2xl p-10">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center">
+            <i data-lucide="alert-triangle" class="w-5 h-5 text-red-400"></i>
+          </div>
+          <h2 class="text-2xl font-bold">The Problem We Solve</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div>
+            <div class="text-4xl font-bold text-red-400 mb-2">75%</div>
+            <p class="text-slate-400 text-sm">of all doctor visits are stress-related, yet stress goes unmonitored between appointments.</p>
+          </div>
+          <div>
+            <div class="text-4xl font-bold text-red-400 mb-2">$300B</div>
+            <p class="text-slate-400 text-sm">annual cost of workplace stress in the US alone — from lost productivity to healthcare claims.</p>
+          </div>
+          <div>
+            <div class="text-4xl font-bold text-red-400 mb-2">80%</div>
+            <p class="text-slate-400 text-sm">of heart attacks have early warning signs that go undetected without continuous monitoring.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Values -->
+    <section class="max-w-6xl mx-auto px-6 mb-20">
+      <h2 class="text-2xl font-bold text-center mb-10">Core Values</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 text-center hover:border-blue-800 transition">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="shield-check" class="w-6 h-6 text-blue-400"></i>
+          </div>
+          <h3 class="text-sm font-bold mb-2">Privacy First</h3>
+          <p class="text-slate-500 text-xs">End-to-end encryption. Your health data stays yours.</p>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 text-center hover:border-blue-800 transition">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="microscope" class="w-6 h-6 text-emerald-400"></i>
+          </div>
+          <h3 class="text-sm font-bold mb-2">Clinical Accuracy</h3>
+          <p class="text-slate-500 text-xs">Medical-grade sensors calibrated to hospital standards.</p>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 text-center hover:border-blue-800 transition">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="zap" class="w-6 h-6 text-amber-400"></i>
+          </div>
+          <h3 class="text-sm font-bold mb-2">Instant Response</h3>
+          <p class="text-slate-500 text-xs">Sub-3-second alerts when thresholds are breached.</p>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 text-center hover:border-blue-800 transition">
+          <div class="w-12 h-12 rounded-xl bg-violet-500/10 flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="heart-handshake" class="w-6 h-6 text-violet-400"></i>
+          </div>
+          <h3 class="text-sm font-bold mb-2">Human-Centered</h3>
+          <p class="text-slate-500 text-xs">Technology that serves people, not the other way around.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800/50">
+    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-slate-600 text-sm">&copy; 2026 Life Line Innovations. All rights reserved.</p>
+      <div class="flex items-center gap-6">
+        <a href="about.html" class="text-slate-500 hover:text-slate-300 text-sm transition">About</a>
+        <a href="how-it-works.html" class="text-slate-500 hover:text-slate-300 text-sm transition">How It Works</a>
+        <a href="contact.html" class="text-slate-500 hover:text-slate-300 text-sm transition">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>

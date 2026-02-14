@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Overview – Life Band Corporate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-slate-100 font-sans">
+
+  <div id="app-sidebar"></div>
+
+  <div class="main-content">
+    <div id="app-topbar"></div>
+
+    <main class="p-6 lg:p-8">
+
+      <!-- Stats Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-8">
+        <div class="metric-card blue animate-fadeInUp" style="opacity:0;animation-delay:0.1s">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center">
+              <i data-lucide="users" class="w-5 h-5 text-blue-600"></i>
+            </div>
+            <span class="text-sm font-medium text-slate-500">Total Employees</span>
+          </div>
+          <div class="text-3xl font-bold text-slate-900" id="totalCount">--</div>
+          <div class="text-xs text-slate-500 mt-1">Active monitoring</div>
+        </div>
+
+        <div class="metric-card green animate-fadeInUp" style="opacity:0;animation-delay:0.2s">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center">
+              <i data-lucide="check-circle" class="w-5 h-5 text-emerald-600"></i>
+            </div>
+            <span class="text-sm font-medium text-slate-500">Normal</span>
+          </div>
+          <div class="text-3xl font-bold text-emerald-600" id="normalCount">--</div>
+          <div class="text-xs text-slate-500 mt-1">Healthy range</div>
+        </div>
+
+        <div class="metric-card amber animate-fadeInUp" style="opacity:0;animation-delay:0.3s">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-9 h-9 rounded-lg bg-amber-50 flex items-center justify-center">
+              <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-600"></i>
+            </div>
+            <span class="text-sm font-medium text-slate-500">Warning</span>
+          </div>
+          <div class="text-3xl font-bold text-amber-600" id="warningCount">--</div>
+          <div class="text-xs text-slate-500 mt-1">Needs attention</div>
+        </div>
+
+        <div class="metric-card red animate-fadeInUp" style="opacity:0;animation-delay:0.4s">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-9 h-9 rounded-lg bg-red-50 flex items-center justify-center">
+              <i data-lucide="alert-octagon" class="w-5 h-5 text-red-600"></i>
+            </div>
+            <span class="text-sm font-medium text-slate-500">Critical</span>
+          </div>
+          <div class="text-3xl font-bold text-red-600" id="criticalCount">--</div>
+          <div class="text-xs text-slate-500 mt-1">Immediate action</div>
+        </div>
+      </div>
+
+      <!-- Chart + Distribution -->
+      <div class="grid lg:grid-cols-3 gap-6 mb-8">
+        <div class="lg:col-span-2 chart-card animate-fadeInUp" style="opacity:0;animation-delay:0.5s">
+          <h3 class="text-base font-bold text-slate-900 mb-1">Workforce Stress Distribution</h3>
+          <p class="text-xs text-slate-500 mb-4">Average stress levels across departments</p>
+          <div class="chart-container" style="height:260px">
+            <canvas id="deptChart"></canvas>
+          </div>
+        </div>
+        <div class="chart-card animate-fadeInUp" style="opacity:0;animation-delay:0.6s">
+          <h3 class="text-base font-bold text-slate-900 mb-4">Status Breakdown</h3>
+          <div class="chart-container flex items-center justify-center" style="height:200px">
+            <canvas id="statusPie"></canvas>
+          </div>
+          <div class="flex justify-center gap-4 mt-4 text-xs">
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Normal</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Warning</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-red-500"></span> Critical</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Employee Table -->
+      <div class="chart-card animate-fadeInUp" style="opacity:0;animation-delay:0.7s">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-5">
+          <h3 class="text-base font-bold text-slate-900">Employee Health Status</h3>
+          <div class="flex items-center gap-3">
+            <div class="relative">
+              <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+              <input type="text" id="empSearch" class="form-input pl-10 py-2 w-full sm:w-56" placeholder="Search employee..." oninput="renderTable()">
+            </div>
+            <select id="statusFilter" class="form-input py-2 w-auto text-sm" onchange="renderTable()">
+              <option value="">All Status</option>
+              <option value="normal">Normal</option>
+              <option value="warning">Warning</option>
+              <option value="critical">Critical</option>
+            </select>
+            <button onclick="downloadEmployeeReport()" class="btn-secondary text-sm py-2">
+              <i data-lucide="download" class="w-4 h-4"></i>
+              Export
+            </button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Employee</th>
+                <th>Department</th>
+                <th>Stress Level</th>
+                <th>Blood Pressure</th>
+                <th>Status</th>
+                <th>Last Sync</th>
+              </tr>
+            </thead>
+            <tbody id="empTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/animations.js"></script>
+  <script>
+    if (!App.Auth.requireAuth('corporate')) throw 'redirect';
+    App.initDashboardShell('corporate-dashboard.html', 'Employee Overview', 'Real-time workforce wellness monitoring');
+    Charts.configure();
+
+    const employees = MockData.employees;
+
+    // Stats
+    const normal = employees.filter(e => e.status === 'normal').length;
+    const warning = employees.filter(e => e.status === 'warning').length;
+    const critical = employees.filter(e => e.status === 'critical').length;
+    document.getElementById('totalCount').textContent = employees.length;
+    document.getElementById('normalCount').textContent = normal;
+    document.getElementById('warningCount').textContent = warning;
+    document.getElementById('criticalCount').textContent = critical;
+
+    // Dept chart
+    const depts = {};
+    employees.forEach(e => {
+      if (!depts[e.department]) depts[e.department] = [];
+      depts[e.department].push(e.stress);
+    });
+    const deptLabels = Object.keys(depts);
+    const deptAvg = deptLabels.map(d => +(depts[d].reduce((a,b) => a+b, 0) / depts[d].length).toFixed(1));
+
+    new Chart(document.getElementById('deptChart'), {
+      type: 'bar',
+      data: {
+        labels: deptLabels,
+        datasets: [{
+          label: 'Avg Stress %',
+          data: deptAvg,
+          backgroundColor: deptAvg.map(v => v >= 70 ? '#FCA5A5' : v >= 50 ? '#FCD34D' : '#6EE7B7'),
+          borderRadius: 8,
+          borderSkipped: false,
+          barPercentage: 0.6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: { y: { min: 0, max: 100, ticks: { callback: v => v + '%' } } }
+      }
+    });
+
+    // Status pie
+    new Chart(document.getElementById('statusPie'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Normal', 'Warning', 'Critical'],
+        datasets: [{ data: [normal, warning, critical], backgroundColor: ['#059669', '#D97706', '#DC2626'], borderWidth: 0, borderRadius: 4 }]
+      },
+      options: { cutout: '65%', plugins: { legend: { display: false } }, responsive: true, maintainAspectRatio: false }
+    });
+
+    // Employee table
+    function renderTable() {
+      const search = document.getElementById('empSearch').value.toLowerCase();
+      const filter = document.getElementById('statusFilter').value;
+      let list = employees;
+      if (search) list = list.filter(e => e.name.toLowerCase().includes(search) || e.department.toLowerCase().includes(search));
+      if (filter) list = list.filter(e => e.status === filter);
+
+      document.getElementById('empTable').innerHTML = list.map(e => `
+        <tr>
+          <td>
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-600">${e.avatar}</div>
+              <div>
+                <div class="text-sm font-semibold text-slate-900">${e.name}</div>
+                <div class="text-xs text-slate-400">${e.id}</div>
+              </div>
+            </div>
+          </td>
+          <td>${e.department}</td>
+          <td>
+            <div class="flex items-center gap-2">
+              <div class="w-16 bg-slate-100 rounded-full h-1.5">
+                <div class="h-1.5 rounded-full ${e.stress >= 80 ? 'bg-red-500' : e.stress >= 60 ? 'bg-amber-500' : 'bg-emerald-500'}" style="width:${e.stress}%"></div>
+              </div>
+              <span class="text-sm font-medium">${e.stress}%</span>
+            </div>
+          </td>
+          <td class="text-sm">${e.bp}</td>
+          <td>${App.statusBadge(e.status)}</td>
+          <td class="text-xs text-slate-500">${e.lastSync}</td>
+        </tr>
+      `).join('');
+    }
+
+    function downloadEmployeeReport() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.setFontSize(18);
+      doc.setTextColor(124, 58, 237);
+      doc.text('Corporate Wellness Report', 20, 25);
+      doc.setFontSize(10);
+      doc.setTextColor(100);
+      doc.text(`Generated: ${new Date().toLocaleDateString()} · Company: TechCorp Inc.`, 20, 33);
+      doc.line(20, 37, 190, 37);
+
+      doc.autoTable({
+        startY: 42,
+        head: [['ID', 'Name', 'Department', 'Stress %', 'BP', 'Status']],
+        body: employees.map(e => [e.id, e.name, e.department, e.stress + '%', e.bp, e.status]),
+        theme: 'grid',
+        headStyles: { fillColor: [124, 58, 237] },
+        styles: { fontSize: 9 }
+      });
+
+      doc.save('Corporate-Wellness-Report.pdf');
+      App.showToast('Report downloaded', 'success');
+    }
+
+    renderTable();
+  </script>
+</body>
+</html>
